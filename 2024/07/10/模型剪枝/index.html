@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>模型剪枝 | Xielei's Blog</title><meta name="author" content="xie lei"><meta name="copyright" content="xie lei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="模型剪枝是深度学习模型优化技术之一，其核心目的是减少模型的参数数量和计算复杂度，以提高模型在资源受限环境中的部署效率和运行速度，剪枝问题可以形式化定义为：其中L为损失函数，x为输入，W为原始权重，Wp为剪枝后的权重,而Wp的范数为剪枝后的权重中的非零值，N剪枝目标设置的非零值的个数。剪枝可以在模型生命周期的不同阶段进行，包括训练前、训练中、训练后，以及通过增量或动态的方式进行。训练前剪枝通过减少初">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模型剪枝">
+<meta property="og:url" content="http://example.com/2024/07/10/%E6%A8%A1%E5%9E%8B%E5%89%AA%E6%9E%9D/index.html">
+<meta property="og:site_name" content="Xielei&#39;s Blog">
+<meta property="og:description" content="模型剪枝是深度学习模型优化技术之一，其核心目的是减少模型的参数数量和计算复杂度，以提高模型在资源受限环境中的部署效率和运行速度，剪枝问题可以形式化定义为：其中L为损失函数，x为输入，W为原始权重，Wp为剪枝后的权重,而Wp的范数为剪枝后的权重中的非零值，N剪枝目标设置的非零值的个数。剪枝可以在模型生命周期的不同阶段进行，包括训练前、训练中、训练后，以及通过增量或动态的方式进行。训练前剪枝通过减少初">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/logo.jpg">
+<meta property="article:published_time" content="2024-07-10T14:00:04.000Z">
+<meta property="article:modified_time" content="2024-07-15T14:29:54.458Z">
+<meta property="article:author" content="xie lei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/logo.jpg"><link rel="shortcut icon" href="/img/website_icon.png"><link rel="canonical" href="http://example.com/2024/07/10/%E6%A8%A1%E5%9E%8B%E5%89%AA%E6%9E%9D/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '模型剪枝',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-07-15 22:29:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Xielei's Blog" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/logo.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Xielei's Blog"><span class="site-name">Xielei's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">模型剪枝</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-07-10T14:00:04.000Z" title="发表于 2024-07-10 22:00:04">2024-07-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-07-15T14:29:54.458Z" title="更新于 2024-07-15 22:29:54">2024-07-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="模型剪枝"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>模型剪枝是深度学习模型优化技术之一，其核心目的是减少模型的参数数量和计算复杂度，以提高模型在资源受限环境中的部署效率和运行速度，剪枝问题可以形式化定义为：<br><img src="https://gitee.com/xieleileileilei/picture/raw/master/image/image-20240715215130751.png" alt="image-20240715215130751"><br>其中L为损失函数，x为输入，W为原始权重，Wp为剪枝后的权重,而Wp的范数为剪枝后的权重中的非零值，N剪枝目标设置的非零值的个数。<br>剪枝可以在模型生命周期的不同阶段进行，包括训练前、训练中、训练后，以及通过增量或动态的方式进行。训练前剪枝通过减少初始参数数量来降低模型的复杂度，但可能需要特别的初始化和训练策略来维持性能。训练中剪枝允许模型逐步适应剪枝操作，但需要精心设计的剪枝策略以避免性能损失。训练后剪枝则基于训练完成的模型来识别不重要的参数，通常需要重训练或微调来补偿可能的性能下降。增量剪枝结合了训练中和训练后剪枝的优点，通过分阶段剪枝为模型提供了更多适应机会。动态剪枝则在模型推理时根据输入数据动态调整剪枝程度，以提高特定任务的效率，但实现更为复杂。<br>模型剪枝的策略尽可能保持或恢复模型性能且尽可能减少参数数目。常见的剪枝策略包括基于权重幅度的剪枝，它进行权重排序，移除那些权重较小的连接，通过阈值选择进行剪枝；正则化策略通过鼓励权重稀疏性，使得模型在训练过程中自然形成稀疏权重矩阵，从而为剪枝提供依据。另外，结构化剪枝如过滤器剪枝易于在硬件上实现，但可能不如非结构化剪枝灵活。非结构化剪枝可以提供更大的压缩空间，但可能需要特定硬件或软件支持来实现加速。<br><strong>结构化剪枝</strong><br>结构化剪枝通过移除模型中的整个结构单元来实现稀疏化，而不破坏数据的存储结构。结构化剪枝有多种粒度，每种粒度针对模型的不同层次进行操作：<br>过滤器剪枝（Filter Pruning），这种剪枝方法通过移除整个过滤器（或称为通道）来减少模型的参数数量和计算量。由于每个过滤器与后续层的每个神经元都相连，移除一个过滤器可以显著减少网络的宽度，从而降低计算复杂度。过滤器剪枝是一种粗粒度剪枝，因为它以过滤器为单位进行操作，而过滤器通常包含多个权重。这种方法对于硬件友好，因为它保持了数据的存储结构，不会破坏卷积层的数据对齐性。<br>核剪枝（Kernel Pruning）：核剪枝涉及到移除卷积核中的某些部分，这可能是一行、一列或者是核中的某些区域。与过滤器剪枝相比，核剪枝的粒度更细，因为它不移除整个过滤器，而是过滤器内部的部分权重。核剪枝可能需要特定的硬件支持来实现有效加速，因为它打破了卷积运算的标准流程。<br>向量级剪枝（Vector-Level Pruning）：向量级剪枝是指移除卷积核中的整行或整列权重，这种剪枝方法的粒度介于过滤器剪枝和核剪枝之间。它通常用于减少卷积核的尺寸，但保持了卷积层的大部分结构。<br>细粒度剪枝（Fine-Grained Pruning）：细粒度剪枝，或称为非结构化剪枝，涉及单个权重的移除。这种剪枝方法可以提供最大的压缩比，因为它允许模型在非常细的粒度上减少参数。然而，由于剪枝后权重的分布变得不规则，这可能会导致计算过程中的缓存命中率下降，从而影响运行效率。因此，细粒度剪枝通常需要特定硬件支持，以便有效利用稀疏性。<br><img src="https://gitee.com/xieleileileilei/picture/raw/master/image/1714396271434-8414e39e-2418-43db-b6dc-452b234181a0.png" alt="未命名文件(17).png"><br> Exploring the granularity of sparsity in convolutional neural networks [Mao et al., CVPR-W]<br>剪枝工具<br>在深度学习框架如Pytorch和TensorFlow中也提供了剪枝的工具，如Torch-Pruning是开源的PyTorch工具箱，专门用于结构化剪枝，以优化和压缩深度学习模型。Torch-Pruning通过构建依赖图（Dep Graph）自动处理层之间的依赖关系，确保剪枝操作不会破坏模型的结构，示例代码如下：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">import torch_pruning <span class="hljs-keyword">as</span> tp<br>model=<span class="hljs-operator"> ...</span><br><span class="hljs-operator"></span>DG = tp.<span class="hljs-constructor">DependencyGraph()</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DG</span>.</span></span>build<span class="hljs-constructor">_dependency(<span class="hljs-params">model</span>, <span class="hljs-params">example_inputs</span>=<span class="hljs-params">torch</span>.<span class="hljs-params">randn</span>(1, 3, 224, 224)</span>)<br>strategy = tp.strategy.<span class="hljs-constructor">L1Strategy()</span><br>pruning_idxs = strategy(model.conv1.weight, amount=<span class="hljs-number">0.4</span>)  # 假设剪枝<span class="hljs-number">40</span>%<br>pruning_plan = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">DG</span>.</span></span>get<span class="hljs-constructor">_pruning_plan(<span class="hljs-params">model</span>.<span class="hljs-params">conv1</span>, <span class="hljs-params">tp</span>.<span class="hljs-params">prune_conv</span>, <span class="hljs-params">idxs</span>=<span class="hljs-params">pruning_idxs</span>)</span><br>pruning_plan.exec<span class="hljs-literal">()</span><br></code></pre></td></tr></table></figure>
+<p>TensorFlow的剪枝API是TensorFlow Model Optimization Toolkit的一部分，它提供了一种在训练过程中减少模型权重的方法，从而创建一个稀疏的模型。具体如tensorflow_model_optimization.sparsity.keras.prune_low_magnitude是用于实现剪枝操作的函数，它会移除模型中幅度较低的权重。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs routeros">import tensorflow_model_optimization as tfmot<br>model = <span class="hljs-built_in">..</span>.<br><span class="hljs-comment"># 定义剪枝计划</span><br>pruning_schedule = tfmot.sparsity.keras.PolynomialDecay(<br>    <span class="hljs-attribute">initial_sparsity</span>=0.0, <br>    <span class="hljs-attribute">final_sparsity</span>=0.5,<br>    <span class="hljs-attribute">begin_step</span>=2000, <br>    <span class="hljs-attribute">end_step</span>=4000<br>)<br><span class="hljs-comment"># 应用剪枝</span><br>model_for_pruning = tfmot.sparsity.keras.prune_low_magnitude(model, <span class="hljs-attribute">pruning_schedule</span>=pruning_schedule)<br><span class="hljs-comment"># 继续训练剪枝后的模型</span><br>model_for_pruning.fit(<span class="hljs-built_in">..</span>.)<br></code></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">xie lei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2024/07/10/%E6%A8%A1%E5%9E%8B%E5%89%AA%E6%9E%9D/">http://example.com/2024/07/10/%E6%A8%A1%E5%9E%8B%E5%89%AA%E6%9E%9D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Xielei's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/logo.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/07/12/%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96/" title="模型量化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">模型量化</div></div></a></div><div class="next-post pull-right"><a href="/2024/01/15/%E5%87%BD%E6%95%B0%E5%BC%8F%E3%80%81%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="函数式编程与响应式编程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">函数式编程与响应式编程</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/logo.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xie lei</div><div class="author-info__description">朝闻道兮</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xieleixielei"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/15/%E6%95%B0%E6%8D%AE%E6%8A%95%E6%AF%92%E6%94%BB%E5%87%BB/" title="数据投毒攻击">数据投毒攻击</a><time datetime="2024-07-15T14:27:04.000Z" title="发表于 2024-07-15 22:27:04">2024-07-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/15/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/" title="知识蒸馏">知识蒸馏</a><time datetime="2024-07-15T00:04:04.000Z" title="发表于 2024-07-15 08:04:04">2024-07-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/14/%E4%BD%8E%E7%A7%A9%E7%A8%80%E7%96%8F%E5%88%86%E8%A7%A3/" title="低秩矩阵分解">低秩矩阵分解</a><time datetime="2024-07-14T14:04:04.000Z" title="发表于 2024-07-14 22:04:04">2024-07-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/14/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/" title="深度学习编译器">深度学习编译器</a><time datetime="2024-07-14T12:03:03.000Z" title="发表于 2024-07-14 20:03:03">2024-07-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96/" title="模型量化">模型量化</a><time datetime="2024-07-12T13:12:57.000Z" title="发表于 2024-07-12 21:12:57">2024-07-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By xie lei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
