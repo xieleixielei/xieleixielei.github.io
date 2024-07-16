@@ -4,7 +4,26 @@
   
     
     <entry>
-      <title>2956:找到两个数组中的公共元素</title>
+      <title>19. 删除链表的倒数第 N 个结点</title>
+      <link href="/2024/07/16/19-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%AC-N-%E4%B8%AA%E7%BB%93%E7%82%B9/"/>
+      <url>/2024/07/16/19-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%AC-N-%E4%B8%AA%E7%BB%93%E7%82%B9/</url>
+      
+        <content type="html"><![CDATA[<p>链表常见解法：<br>使用前后指针, 前指针遍历完时后指针指向删除节点；</p><p><img src="https://cdn.nlark.com/yuque/0/2024/png/33777925/1721116811806-af8e91b3-8ad7-421d-a3ca-b9263359f8d6.png" alt="img"></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * public class ListNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     ListNode next;</span><br><span class="hljs-comment"> *     ListNode() &#123;&#125;</span><br><span class="hljs-comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span><br><span class="hljs-comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> ListNode <span class="hljs-title function_">removeNthFromEnd</span><span class="hljs-params">(ListNode head, <span class="hljs-type">int</span> n)</span> &#123;<br>        ListNode dummy=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>(<span class="hljs-number">0</span>,head);<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">back</span>  <span class="hljs-operator">=</span> dummy;<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">front</span> <span class="hljs-operator">=</span> head;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)&#123;<br>            front=front.next;<br>        &#125;<br>        <span class="hljs-keyword">while</span>(front!=<span class="hljs-literal">null</span>)&#123;<br>            front=front.next;<br>            back=back.next;<br>        &#125;<br>        back.next=back.next.next;<br>        <span class="hljs-keyword">return</span> dummy.next;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> leetcode刷题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>2956.找到两个数组中的公共元素</title>
       <link href="/2024/07/16/2956-%E6%89%BE%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E5%85%AC%E5%85%B1%E5%85%83%E7%B4%A0/"/>
       <url>/2024/07/16/2956-%E6%89%BE%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E5%85%AC%E5%85%B1%E5%85%83%E7%B4%A0/</url>
       

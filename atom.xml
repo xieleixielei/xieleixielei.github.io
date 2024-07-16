@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-07-16T07:29:15.288Z</updated>
+  <updated>2024-07-16T08:01:29.065Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>2956:找到两个数组中的公共元素</title>
+    <title>19. 删除链表的倒数第 N 个结点</title>
+    <link href="http://example.com/2024/07/16/19-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%AC-N-%E4%B8%AA%E7%BB%93%E7%82%B9/"/>
+    <id>http://example.com/2024/07/16/19-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%AC-N-%E4%B8%AA%E7%BB%93%E7%82%B9/</id>
+    <published>2024-07-16T08:00:48.000Z</published>
+    <updated>2024-07-16T08:01:29.065Z</updated>
+    
+    <content type="html"><![CDATA[<p>链表常见解法：<br>使用前后指针, 前指针遍历完时后指针指向删除节点；</p><p><img src="https://cdn.nlark.com/yuque/0/2024/png/33777925/1721116811806-af8e91b3-8ad7-421d-a3ca-b9263359f8d6.png" alt="img"></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * public class ListNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     ListNode next;</span><br><span class="hljs-comment"> *     ListNode() &#123;&#125;</span><br><span class="hljs-comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span><br><span class="hljs-comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> ListNode <span class="hljs-title function_">removeNthFromEnd</span><span class="hljs-params">(ListNode head, <span class="hljs-type">int</span> n)</span> &#123;<br>        ListNode dummy=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>(<span class="hljs-number">0</span>,head);<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">back</span>  <span class="hljs-operator">=</span> dummy;<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">front</span> <span class="hljs-operator">=</span> head;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)&#123;<br>            front=front.next;<br>        &#125;<br>        <span class="hljs-keyword">while</span>(front!=<span class="hljs-literal">null</span>)&#123;<br>            front=front.next;<br>            back=back.next;<br>        &#125;<br>        back.next=back.next.next;<br>        <span class="hljs-keyword">return</span> dummy.next;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;链表常见解法：&lt;br&gt;使用前后指针, 前指针遍历完时后指针指向删除节点；&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.nlark.com/yuque/0/2024/png/33777925/1721116811806-af8e91b3-8ad7-421d-a3</summary>
+      
+    
+    
+    
+    
+    <category term="leetcode刷题" scheme="http://example.com/tags/leetcode%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2956.找到两个数组中的公共元素</title>
     <link href="http://example.com/2024/07/16/2956-%E6%89%BE%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E5%85%AC%E5%85%B1%E5%85%83%E7%B4%A0/"/>
     <id>http://example.com/2024/07/16/2956-%E6%89%BE%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E5%85%AC%E5%85%B1%E5%85%83%E7%B4%A0/</id>
     <published>2024-07-16T07:28:48.000Z</published>
-    <updated>2024-07-16T07:29:15.288Z</updated>
+    <updated>2024-07-16T07:30:43.308Z</updated>
     
     <content type="html"><![CDATA[<p>把数组转成哈希集合，就可以 O(1) 判断元素是否在数组中了。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[] findIntersectionValues(<span class="hljs-type">int</span>[] nums1, <span class="hljs-type">int</span>[] nums2) &#123;<br>            HashSet&lt;Integer&gt;set1=<span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums1)&#123;<br>                set1.add(x);<br>            &#125;<br>            HashSet&lt;Integer&gt;set2=<span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums2)&#123;<br>                set2.add(x);<br>            &#125;<br>            <span class="hljs-type">int</span> n1=<span class="hljs-number">0</span>,n2=<span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums1)&#123;<br>                <span class="hljs-keyword">if</span>(set2.contains(x))&#123;<br>                    n1++;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums2)&#123;<br>                <span class="hljs-keyword">if</span>(set1.contains(x))&#123;<br>                    n2++;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[]&#123;n1,n2&#125;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
     
@@ -442,26 +465,6 @@
     
     
     <category term="命令" scheme="http://example.com/tags/%E5%91%BD%E4%BB%A4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo使用命令</title>
-    <link href="http://example.com/2023/10/08/hello-world/"/>
-    <id>http://example.com/2023/10/08/hello-world/</id>
-    <published>2023-10-08T08:21:24.000Z</published>
-    <updated>2024-07-15T14:32:57.692Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
     
   </entry>
   
