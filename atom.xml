@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-07-16T12:15:38.429Z</updated>
+  <updated>2024-11-13T08:16:07.594Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>青训营-小R的三的倍数分解</title>
+    <link href="http://example.com/2024/11/13/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E4%B8%89%E7%9A%84%E5%80%8D%E6%95%B0%E5%88%86%E8%A7%A3/"/>
+    <id>http://example.com/2024/11/13/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E4%B8%89%E7%9A%84%E5%80%8D%E6%95%B0%E5%88%86%E8%A7%A3/</id>
+    <published>2024-11-13T07:57:40.000Z</published>
+    <updated>2024-11-13T08:16:07.594Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>小R拿到了一些正整数，这些正整数都是3的倍数。他需要将每一个数$n$分解为三个3的倍数，并且每种分解方法的顺序不同也视为不同的分解方式。你的任务是帮助小R计算每个$n$可以分解成三个3的倍数的方法数。如果某个数无法分解，则返回0。需要注意的是，分解出的每个数都不能为0。</p><hr><h3 id="测试样例"><a href="#测试样例" class="headerlink" title="测试样例"></a>测试样例</h3><p><em><strong>样例1：</strong></em></p><blockquote><p>输入：<code>n = 9</code><br>输出：<code>1</code></p></blockquote><p><em><strong>样例2：</strong></em></p><blockquote><p>输入：<code>n = 12</code><br>输出：<code>3</code></p></blockquote><hr><h3 id="解答："><a href="#解答：" class="headerlink" title="解答："></a>解答：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">solution</span>(<span class="hljs-params">n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>    <span class="hljs-comment"># 如果 n 不能被 3 整除，返回 0</span><br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">3</span> != <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    <br>    <span class="hljs-comment"># 计算 m = n / 3</span><br>    m = n // <span class="hljs-number">3</span><br>    <br>    <span class="hljs-comment"># 如果 m &lt; 3，无法分解为三个正整数 3 的倍数</span><br>    <span class="hljs-keyword">if</span> m &lt; <span class="hljs-number">3</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    <br>    <span class="hljs-comment"># 返回 C(m-1, 2)，即从 m-1 中选择 2 个 分割位置</span><br>    <span class="hljs-keyword">return</span> math.comb(m - <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-built_in">print</span>(solution(<span class="hljs-number">9</span>) == <span class="hljs-number">1</span>)   <span class="hljs-comment"># 结果为 1</span><br>    <span class="hljs-built_in">print</span>(solution(<span class="hljs-number">12</span>) == <span class="hljs-number">3</span>)  <span class="hljs-comment"># 结果为 3</span><br><br></code></pre></td></tr></table></figure><h3 id="解答思路"><a href="#解答思路" class="headerlink" title="解答思路"></a>解答思路</h3><ul><li><p>我们需要将 <code>n</code> 分解成三个正整数，且每个数都必须是 <code>3</code> 的倍数，且不为零。</p></li><li><p>假设我们将 <code>n</code> 分解为三个数 <code>a, b, c</code>，使得：</p><center>a+b+c=n</center><p>且每个数 <code>a, b, c</code> 都是 <code>3</code> 的倍数。</p><p>所以，问题转化为：</p><center>3*(x+y+z)=n</center><p>即<code>x+y+z=3/n</code>，其中，<code>x, y, z</code> 都是正整数。</p></li><li><p>现在，我们需要找到 <code>x + y + z = m</code> 的正整数解的个数，其中 <code>m = n / 3</code>。</p></li><li><p>对于方程 <code>x + y + z = m</code>，其中 <code>x, y, z</code> 是正整数，该解的个数为 <code>C(m - 1, 2)</code>，即从 <code>m-1</code> 中选择 2 个分隔符。</p></li></ul><h3 id="异常实例处理"><a href="#异常实例处理" class="headerlink" title="异常实例处理"></a>异常实例处理</h3><ul><li>当 <code>n</code> 不能被 3 整除时，无法分解成三个 <code>3</code> 的倍数，返回 <code>0</code>。</li><li>当 <code>m = n / 3</code> 小于 3时，即无法分解为三个正整数 3 的倍数，返回 <code>0</code>。</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h3&gt;&lt;p&gt;小R拿到了一些正整数，这些正整数都是3的倍数。他需要将每一个数$n$分解为三个3的倍数，并且每种分解方法的顺序不同也视为不同</summary>
+      
+    
+    
+    
+    
+    <category term="青训营" scheme="http://example.com/tags/%E9%9D%92%E8%AE%AD%E8%90%A5/"/>
+    
+    <category term="刷题" scheme="http://example.com/tags/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
+  
+  <entry>
     <title>70. 爬楼梯</title>
     <link href="http://example.com/2024/07/16/70-%E7%88%AC%E6%A5%BC%E6%A2%AF/"/>
     <id>http://example.com/2024/07/16/70-%E7%88%AC%E6%A5%BC%E6%A2%AF/</id>
     <published>2024-07-16T12:07:31.000Z</published>
-    <updated>2024-07-16T12:15:38.429Z</updated>
+    <updated>2024-07-16T12:16:52.734Z</updated>
     
     <content type="html"><![CDATA[<p>f(x) 表示爬到第 x 级台阶的方案数，考虑最后一步可能跨了一级台阶，也可能跨了两级台阶，所以我们可以列出如下状态方程：</p><center>f(x)=f(x−1)+f(x−2)</center><p>记忆化搜索：</p><p>设置int[]dp数组，int[n]表示f(x)，n&#x3D;1,2时直接返回。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">climbStairs</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> &#123;<br>       <span class="hljs-keyword">if</span>(n==<span class="hljs-number">1</span>)<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>       <span class="hljs-keyword">if</span>(n==<span class="hljs-number">2</span>)<span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;<br>       <span class="hljs-type">int</span>[]dp=<span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[n+<span class="hljs-number">1</span>];<br>       dp[<span class="hljs-number">1</span>]=<span class="hljs-number">1</span>;<br>       dp[<span class="hljs-number">2</span>]=<span class="hljs-number">2</span>;<br>       <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">3</span>;i&lt;=n;i++)dp[i]=dp[i-<span class="hljs-number">1</span>]+dp[i-<span class="hljs-number">2</span>];<br>       <span class="hljs-keyword">return</span> dp[n];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
     
@@ -40,6 +64,8 @@
     
     <category term="leetcode刷题" scheme="http://example.com/tags/leetcode%E5%88%B7%E9%A2%98/"/>
     
+    <category term="动态规划" scheme="http://example.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
   </entry>
   
   <entry>
@@ -47,7 +73,7 @@
     <link href="http://example.com/2024/07/16/19-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%AC-N-%E4%B8%AA%E7%BB%93%E7%82%B9/"/>
     <id>http://example.com/2024/07/16/19-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%AC-N-%E4%B8%AA%E7%BB%93%E7%82%B9/</id>
     <published>2024-07-16T08:00:48.000Z</published>
-    <updated>2024-07-16T08:01:29.065Z</updated>
+    <updated>2024-07-16T12:17:03.653Z</updated>
     
     <content type="html"><![CDATA[<p>链表常见解法：<br>使用前后指针, 前指针遍历完时后指针指向删除节点；</p><p><img src="https://cdn.nlark.com/yuque/0/2024/png/33777925/1721116811806-af8e91b3-8ad7-421d-a3ca-b9263359f8d6.png" alt="img"></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * public class ListNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     ListNode next;</span><br><span class="hljs-comment"> *     ListNode() &#123;&#125;</span><br><span class="hljs-comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span><br><span class="hljs-comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> ListNode <span class="hljs-title function_">removeNthFromEnd</span><span class="hljs-params">(ListNode head, <span class="hljs-type">int</span> n)</span> &#123;<br>        ListNode dummy=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>(<span class="hljs-number">0</span>,head);<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">back</span>  <span class="hljs-operator">=</span> dummy;<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">front</span> <span class="hljs-operator">=</span> head;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;i++)&#123;<br>            front=front.next;<br>        &#125;<br>        <span class="hljs-keyword">while</span>(front!=<span class="hljs-literal">null</span>)&#123;<br>            front=front.next;<br>            back=back.next;<br>        &#125;<br>        back.next=back.next.next;<br>        <span class="hljs-keyword">return</span> dummy.next;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
     
@@ -63,6 +89,8 @@
     
     <category term="leetcode刷题" scheme="http://example.com/tags/leetcode%E5%88%B7%E9%A2%98/"/>
     
+    <category term="链表" scheme="http://example.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
   </entry>
   
   <entry>
@@ -70,7 +98,7 @@
     <link href="http://example.com/2024/07/16/2956-%E6%89%BE%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E5%85%AC%E5%85%B1%E5%85%83%E7%B4%A0/"/>
     <id>http://example.com/2024/07/16/2956-%E6%89%BE%E5%88%B0%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E5%85%AC%E5%85%B1%E5%85%83%E7%B4%A0/</id>
     <published>2024-07-16T07:28:48.000Z</published>
-    <updated>2024-07-16T07:30:43.308Z</updated>
+    <updated>2024-07-16T12:17:17.497Z</updated>
     
     <content type="html"><![CDATA[<p>把数组转成哈希集合，就可以 O(1) 判断元素是否在数组中了。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[] findIntersectionValues(<span class="hljs-type">int</span>[] nums1, <span class="hljs-type">int</span>[] nums2) &#123;<br>            HashSet&lt;Integer&gt;set1=<span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums1)&#123;<br>                set1.add(x);<br>            &#125;<br>            HashSet&lt;Integer&gt;set2=<span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums2)&#123;<br>                set2.add(x);<br>            &#125;<br>            <span class="hljs-type">int</span> n1=<span class="hljs-number">0</span>,n2=<span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums1)&#123;<br>                <span class="hljs-keyword">if</span>(set2.contains(x))&#123;<br>                    n1++;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums2)&#123;<br>                <span class="hljs-keyword">if</span>(set1.contains(x))&#123;<br>                    n2++;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[]&#123;n1,n2&#125;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
     
@@ -86,6 +114,8 @@
     
     <category term="leetcode刷题" scheme="http://example.com/tags/leetcode%E5%88%B7%E9%A2%98/"/>
     
+    <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
+    
   </entry>
   
   <entry>
@@ -93,7 +123,7 @@
     <link href="http://example.com/2024/07/16/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/"/>
     <id>http://example.com/2024/07/16/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</id>
     <published>2024-07-16T06:56:29.000Z</published>
-    <updated>2024-07-16T07:03:10.100Z</updated>
+    <updated>2024-07-16T12:17:27.448Z</updated>
     
     <content type="html"><![CDATA[<p>思路：</p><p>申请两个指针，第一个指针叫 pre，最初是指向 null 的。</p><p>第二个指针 cur 指向 head，然后不断遍历 cur。</p><p>每次迭代到 cur，都将 cur 的 next 指向 pre，然后 pre 和 cur 前进一位。</p><p>都迭代完了(cur 变成 null 了)，pre 就是最后一个节点了。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * public class ListNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     ListNode next;</span><br><span class="hljs-comment"> *     ListNode() &#123;&#125;</span><br><span class="hljs-comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span><br><span class="hljs-comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> ListNode <span class="hljs-title function_">reverseList</span><span class="hljs-params">(ListNode head)</span> &#123;<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">pre</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>        <span class="hljs-type">ListNode</span> <span class="hljs-variable">cur</span> <span class="hljs-operator">=</span> head;<br>        <span class="hljs-keyword">while</span>(cur!=<span class="hljs-literal">null</span>)&#123;<br>            ListNode nxt=cur.next;<br>            cur.next=pre;<br>            pre=cur;<br>            cur=nxt;<br>        &#125;<br>        <span class="hljs-keyword">return</span> pre;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p><img src="https://cdn.nlark.com/yuque/0/2024/gif/33777925/1721112854377-19aecd3d-48b9-47b6-9af4-b4f7ff38cd32.gif" alt="img"></p>]]></content>
     
@@ -111,6 +141,8 @@
     
     <category term="leetcode刷题" scheme="http://example.com/tags/leetcode%E5%88%B7%E9%A2%98/"/>
     
+    <category term="链表" scheme="http://example.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
   </entry>
   
   <entry>
@@ -118,7 +150,7 @@
     <link href="http://example.com/2024/07/16/%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/"/>
     <id>http://example.com/2024/07/16/%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/</id>
     <published>2024-07-16T02:56:20.000Z</published>
-    <updated>2024-07-16T02:57:01.302Z</updated>
+    <updated>2024-07-16T12:17:36.625Z</updated>
     
     <content type="html"><![CDATA[<p>创建哨兵节点在返回的链表节点之前，之后采用节点指针遍历，注意判断终止条件，如果有进位也要继续。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * public class ListNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     ListNode next;</span><br><span class="hljs-comment"> *     ListNode() &#123;&#125;</span><br><span class="hljs-comment"> *     ListNode(int val) &#123; this.val = val; &#125;</span><br><span class="hljs-comment"> *     ListNode(int val, ListNode next) &#123; this.val = val; this.next = next; &#125;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> ListNode <span class="hljs-title function_">addTwoNumbers</span><span class="hljs-params">(ListNode l1, ListNode l2)</span> &#123;<br>        ListNode head=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>();<span class="hljs-comment">//哨兵节点</span><br>        ListNode current=head;<br>        <span class="hljs-type">int</span> rem=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(l1!=<span class="hljs-literal">null</span>||l2!=<span class="hljs-literal">null</span>||rem!=<span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">if</span> (l1!=<span class="hljs-literal">null</span>)rem+=l1.val;<br>            <span class="hljs-keyword">if</span> (l2!=<span class="hljs-literal">null</span>)rem+=l2.val;<br>            current.next=<span class="hljs-keyword">new</span> <span class="hljs-title class_">ListNode</span>(rem%<span class="hljs-number">10</span>);<br>            current=current.next;<br>            rem/=<span class="hljs-number">10</span>;<br>            <span class="hljs-keyword">if</span>(l1!=<span class="hljs-literal">null</span>)l1=l1.next;<br>            <span class="hljs-keyword">if</span>(l2!=<span class="hljs-literal">null</span>)l2=l2.next;<br>        &#125;<br>        <span class="hljs-keyword">return</span> head.next;<br>    &#125;<br></code></pre></td></tr></table></figure>]]></content>
     
@@ -134,6 +166,8 @@
     
     <category term="leetcode刷题" scheme="http://example.com/tags/leetcode%E5%88%B7%E9%A2%98/"/>
     
+    <category term="链表" scheme="http://example.com/tags/%E9%93%BE%E8%A1%A8/"/>
+    
   </entry>
   
   <entry>
@@ -141,7 +175,7 @@
     <link href="http://example.com/2024/07/16/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/"/>
     <id>http://example.com/2024/07/16/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/</id>
     <published>2024-07-16T02:55:20.000Z</published>
-    <updated>2024-07-16T02:56:05.616Z</updated>
+    <updated>2024-07-16T12:17:47.705Z</updated>
     
     <content type="html"><![CDATA[<p>暴力：双循环</p><p>正解：</p><p>哈希表&lt;值，下标&gt;</p><p>先find找不到再insert，保证不会和自己匹配。</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span>[] twoSum(<span class="hljs-type">int</span>[] nums, <span class="hljs-type">int</span> target) &#123;<br>        Map&lt;Integer, Integer&gt; hashtable = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;Integer, Integer&gt;();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; nums.length; ++i) &#123;<br>            <span class="hljs-keyword">if</span> (hashtable.containsKey(target - nums[i])) &#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[]&#123;hashtable.get(target - nums[i]), i&#125;;<br>            &#125;<br>            hashtable.put(nums[i], i);<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[<span class="hljs-number">0</span>];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>链接：<a href="https://leetcode.cn/problems/two-sum/solutions/434597/liang-shu-zhi-he-by-leetcode-solution/">https://leetcode.cn/problems/two-sum/solutions/434597/liang-shu-zhi-he-by-leetcode-solution/</a></p>]]></content>
     
@@ -159,6 +193,8 @@
     
     
     <category term="leetcode刷题" scheme="http://example.com/tags/leetcode%E5%88%B7%E9%A2%98/"/>
+    
+    <category term="链表" scheme="http://example.com/tags/%E9%93%BE%E8%A1%A8/"/>
     
   </entry>
   
@@ -444,28 +480,6 @@
     
     
     <category term="主动学习" scheme="http://example.com/tags/%E4%B8%BB%E5%8A%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>常用数据集汇总</title>
-    <link href="http://example.com/2023/11/01/%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B1%87%E6%80%BB/"/>
-    <id>http://example.com/2023/11/01/%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B1%87%E6%80%BB/</id>
-    <published>2023-11-01T12:26:14.000Z</published>
-    <updated>2024-01-10T01:32:24.040Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="CIFAR-10"><a href="#CIFAR-10" class="headerlink" title="CIFAR-10"></a>CIFAR-10</h2><p>CIFAR-10 是由Hinton 的学生Alex Krizhevsky 和Ilya Sutskever 整理的一个用于识别普适物体的小型数据集。包含60000个32x32像素RGB三通道彩色图像，10个类别，每个类别6000个图像。 有50000张训练图像和10000张测试图像。</p><p>数据集地址如下：<a href="http://www.cs.toronto.edu/~kriz/cifar.html">The CIFAR-10 dataset</a></p><p><img src="https://cdn.jsdelivr.net/gh/xieleixielei/picture/202311012014102.png" alt="img"></p><p>与MNIST 数据集比， CIFAR-10 有以下不同点：</p><p>(1) CIFAR-10 是3 通道的彩色RGB 图像，而MNIST 是灰度图像。</p><p>(2) CIFAR-10 的图片尺寸为32 × 32，而MNIST 的图片尺寸为28 × 28，比MNIST 稍大。</p><p>(3) 相比于手写字符，CIFAR-10 含有的是现实世界中真实的物体，不仅噪声很大，而且物体的比例、特征都不尽相同，这为识别带来很大困难。MNIST数据集展示的是不同人的手写0~9数字。直接的线性模型如Softmax 在CIFAR-10 上表现得很差。</p><p>CIFAR10数据集结构组成可分为这四个部分：</p><ul><li>train_x:(50000, 32, 32, 3)——训练样本</li><li>train_y:(50000, 1)——训练样本标签</li><li>test_x:(10000, 32, 32, 3)——测试样本</li><li>test_y:(10000, 1)——测试样本标签</li></ul><h2 id="CIFAR-100"><a href="#CIFAR-100" class="headerlink" title="CIFAR-100"></a>CIFAR-100</h2><p>包含60000个32x32像素RGB三通道彩色图像，100个类别，每个类别600个图像。每个类有500个训练图像和100个测试图像。CIFAR-100中的100个子类被分为20个大类。每个图像都有一个“fine”标签(它所属的子类)和一个“coarse”标签(它所属的大类)。</p><p>地址：<a href="https://www.cs.toronto.edu/~kriz/cifar.html">https://www.cs.toronto.edu/~kriz/cifar.html</a></p><table><thead><tr><th><strong>大类</strong></th><th><strong>子类</strong></th></tr></thead><tbody><tr><td>水栖哺乳动物</td><td>海狸，海豚，水獭，海豹，鲸鱼</td></tr><tr><td>鱼类</td><td>水族鱼，比目鱼，鳐，鲨鱼，鳟鱼</td></tr><tr><td>花</td><td>兰花，罂粟，玫瑰，向日葵，郁金香</td></tr><tr><td>食物容器</td><td>瓶子，碗，罐头，杯子，盘子</td></tr><tr><td>水果和蔬菜</td><td>苹果，蘑菇，橘子，梨，甜椒</td></tr><tr><td>家用电器</td><td>时钟，电脑键盘，灯，电话，电视</td></tr><tr><td>家居家具</td><td>床，椅子，沙发，桌子，衣柜</td></tr><tr><td>昆虫</td><td>蜜蜂、甲虫、蝴蝶、毛虫、蟑螂</td></tr><tr><td>大型食肉动物</td><td>熊，豹，狮子，老虎，狼</td></tr><tr><td>大型人造户外用品</td><td>桥梁、城堡、房屋、道路、摩天大楼</td></tr><tr><td>大型户外自然景观</td><td>云、森林、高山、平原、大海</td></tr><tr><td>大型杂食动物和食草动物</td><td>骆驼，牛，黑猩猩，大象，袋鼠</td></tr><tr><td>中型哺乳动物</td><td>狐狸，豪猪，负鼠，浣熊，臭鼬</td></tr><tr><td>非昆虫无脊椎动物</td><td>螃蟹，龙虾，蜗牛，蜘蛛，蠕虫</td></tr><tr><td>人类</td><td>宝贝，男孩，女孩，男人，女人</td></tr><tr><td>爬行动物</td><td>鳄鱼，恐龙，蜥蜴，蛇，乌龟</td></tr><tr><td>小型哺乳动物</td><td>仓鼠，老鼠，兔子，鼩鼱，松鼠</td></tr><tr><td>树木</td><td>枫树、橡树、棕榈树、松树、柳树</td></tr><tr><td>交通工具</td><td>自行车、公共汽车、摩托车、小货车、火车</td></tr><tr><td>其他车类</td><td>割草机，火箭，有轨电车，坦克，拖拉机</td></tr></tbody></table><h2 id="ImageNet-and-ILSVRC2012"><a href="#ImageNet-and-ILSVRC2012" class="headerlink" title="ImageNet and ILSVRC2012"></a>ImageNet and ILSVRC2012</h2><p><strong>ImageNet</strong>是斯坦福大学教授李飞飞为了解决机器学习中过拟合和泛化的问题而牵头构建的数据集。该数据集从2007年开始建立，直到2009年作为论文的形式在CVPR 2009上面发布。直到目前，该数据集仍然是深度学习领域中图像分类、检测、定位的最常用数据集之一。ImageNet本身有1500万张图片，2万分类。其中有<strong>超过100万张图片有明确类别标注和物体位置标注</strong>。</p><p>基于ImageNet的比赛称为ILSVRC，全称是ImageNet Large-Scale Visual Recognition Challenge，每年举办一次，每次从ImageNet数据集中抽取部分样本作为比赛的数据集。“ILSVRC”一词有时候也用来特指该比赛使用的数据集，即ImageNet的一个子集，其中最常用的是2012年的数据集，记为<strong>ILSVRC2012</strong>（常用）。</p><p>地址：<a href="https://www.image-net.org/download.php">https://www.image-net.org/download.php</a></p><table><thead><tr><th>ILSVRC2012训练集</th><th>1000个分类</th><th>120万张图片</th></tr></thead><tbody><tr><td>ILSVRC2012验证集</td><td>1000个分类</td><td>5万张图片</td></tr><tr><td>ILSVRC2012测试集</td><td>1000个分类</td><td>10万张图片</td></tr></tbody></table><h2 id="CIFAR10-C"><a href="#CIFAR10-C" class="headerlink" title="CIFAR10-C"></a>CIFAR10-C</h2><p>CIFAR10-C是自然分布鲁棒性数据集的一种，使用五种不同强度的各种人工合成噪声来破坏CIFAR-10的测试集。其中包含四种加性噪音：高斯噪声(Gaussian noise)、散粒噪声(shot noise)、散斑噪声(speckle noise)和脉冲噪声(impulse noise)。文章地址：<a href="https://github.com/tanimutomo/cifar10-c-eval">https://github.com/tanimutomo/cifar10-c-eval</a></p><p>数据集地址：<a href="https://zenodo.org/records/2535967#.XncuG5P7TUJ">https://zenodo.org/records/2535967#.XncuG5P7TUJ</a></p><p><img src="https://cdn.jsdelivr.net/gh/xieleixielei/picture/202311012101371.png" alt="image"></p><h2 id="CIFAR100-C"><a href="#CIFAR100-C" class="headerlink" title="CIFAR100-C"></a>CIFAR100-C</h2><p>文章地址：<a href="https://arxiv.org/abs/1807.01697">Benchmarking Neural Network Robustness to Common Corruptions and Surface Variations</a></p><p>数据集地址：<a href="https://zenodo.org/records/3555552">https://zenodo.org/records/3555552</a></p><h2 id="ImageNet-C"><a href="#ImageNet-C" class="headerlink" title="ImageNet-C"></a>ImageNet-C</h2><p>ImageNet-C是自然分布鲁棒性数据集的一种，包含由算法生成的图片损坏：噪声、模糊、天气和数码类别。文章地址：<a href="https://github.com/hendrycks/robustness">https://github.com/hendrycks/robustness</a></p><p>下载链接：<a href="https://zenodo.org/records/2235448#.Y0jPtXZBxPY">https://zenodo.org/records/2235448#.Y0jPtXZBxPY</a></p><p><img src="https://cdn.jsdelivr.net/gh/xieleixielei/picture/202311012014159.png" alt="img"></p><h2 id="ImageNet-A"><a href="#ImageNet-A" class="headerlink" title="ImageNet-A"></a>ImageNet-A</h2><p>ImageNet-A收集了一系列来自真实世界的未经修改的图片，这些图片会被ResNet模型错误地分类。文章地址：<a href="https://github.com/hendrycks/natural-adv-examples">https://github.com/hendrycks/natural-adv-examples</a></p><p>数据集地址：<a href="https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar">https://people.eecs.berkeley.edu/~hendrycks/imagenet-a.tar</a></p><p><img src="https://cdn.jsdelivr.net/gh/xieleixielei/picture/202311012102174.png" alt="image (1)"></p><h2 id="ObjectNet"><a href="#ObjectNet" class="headerlink" title="ObjectNet"></a>ObjectNet</h2><p>ObjectNet包含113种与ImageNet相同的类别，通过对不同背景、旋转角度、视角等情况下的日常家庭物品进行拍摄，组成了一个用于验证视觉系统的数据集。该数据集不包含训练集，仅包含五万张图片的测试集。人类视觉系统可以轻松地继续执行分类任务，而机器视觉系统在该数据集上会出现较大的掉点。</p><p>数据集地址：<a href="https://objectnet.dev/">https://objectnet.dev/</a></p><p><img src="https://cdn.jsdelivr.net/gh/xieleixielei/picture/202311012014050.webp" alt="img"></p><h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><ol><li><a href="https://blog.csdn.net/qq_41185868/article/details/82793025">Dataset之CIFAR-10：CIFAR-10数据集的简介、下载、使用方法之详细攻略-CSDN博客</a></li><li>[【精选】【神经网络与深度学习】CIFAR10数据集介绍，并使用卷积神经网络训练图像分类模型——<a href="https://blog.csdn.net/weixin_45954454/article/details/114519299">附完整训练代码]<em>路遥</em>.的博客-CSDN博客</a></li><li><a href="https://zhuanlan.zhihu.com/p/573479239">深度学习常用数据集介绍 (持续更新)</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;CIFAR-10&quot;&gt;&lt;a href=&quot;#CIFAR-10&quot; class=&quot;headerlink&quot; title=&quot;CIFAR-10&quot;&gt;&lt;/a&gt;CIFAR-10&lt;/h2&gt;&lt;p&gt;CIFAR-10 是由Hinton 的学生Alex Krizhevsky 和Ilya Sut</summary>
-      
-    
-    
-    
     
     <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     

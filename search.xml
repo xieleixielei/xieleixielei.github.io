@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>青训营-小R的三的倍数分解</title>
+      <link href="/2024/11/13/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E4%B8%89%E7%9A%84%E5%80%8D%E6%95%B0%E5%88%86%E8%A7%A3/"/>
+      <url>/2024/11/13/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E4%B8%89%E7%9A%84%E5%80%8D%E6%95%B0%E5%88%86%E8%A7%A3/</url>
+      
+        <content type="html"><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>小R拿到了一些正整数，这些正整数都是3的倍数。他需要将每一个数$n$分解为三个3的倍数，并且每种分解方法的顺序不同也视为不同的分解方式。你的任务是帮助小R计算每个$n$可以分解成三个3的倍数的方法数。如果某个数无法分解，则返回0。需要注意的是，分解出的每个数都不能为0。</p><hr><h3 id="测试样例"><a href="#测试样例" class="headerlink" title="测试样例"></a>测试样例</h3><p><em><strong>样例1：</strong></em></p><blockquote><p>输入：<code>n = 9</code><br>输出：<code>1</code></p></blockquote><p><em><strong>样例2：</strong></em></p><blockquote><p>输入：<code>n = 12</code><br>输出：<code>3</code></p></blockquote><hr><h3 id="解答："><a href="#解答：" class="headerlink" title="解答："></a>解答：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> math<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">solution</span>(<span class="hljs-params">n: <span class="hljs-built_in">int</span></span>) -&gt; <span class="hljs-built_in">int</span>:<br>    <span class="hljs-comment"># 如果 n 不能被 3 整除，返回 0</span><br>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">3</span> != <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    <br>    <span class="hljs-comment"># 计算 m = n / 3</span><br>    m = n // <span class="hljs-number">3</span><br>    <br>    <span class="hljs-comment"># 如果 m &lt; 3，无法分解为三个正整数 3 的倍数</span><br>    <span class="hljs-keyword">if</span> m &lt; <span class="hljs-number">3</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    <br>    <span class="hljs-comment"># 返回 C(m-1, 2)，即从 m-1 中选择 2 个 分割位置</span><br>    <span class="hljs-keyword">return</span> math.comb(m - <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-built_in">print</span>(solution(<span class="hljs-number">9</span>) == <span class="hljs-number">1</span>)   <span class="hljs-comment"># 结果为 1</span><br>    <span class="hljs-built_in">print</span>(solution(<span class="hljs-number">12</span>) == <span class="hljs-number">3</span>)  <span class="hljs-comment"># 结果为 3</span><br><br></code></pre></td></tr></table></figure><h3 id="解答思路"><a href="#解答思路" class="headerlink" title="解答思路"></a>解答思路</h3><ul><li><p>我们需要将 <code>n</code> 分解成三个正整数，且每个数都必须是 <code>3</code> 的倍数，且不为零。</p></li><li><p>假设我们将 <code>n</code> 分解为三个数 <code>a, b, c</code>，使得：</p><center>a+b+c=n</center><p>且每个数 <code>a, b, c</code> 都是 <code>3</code> 的倍数。</p><p>所以，问题转化为：</p><center>3*(x+y+z)=n</center><p>即<code>x+y+z=3/n</code>，其中，<code>x, y, z</code> 都是正整数。</p></li><li><p>现在，我们需要找到 <code>x + y + z = m</code> 的正整数解的个数，其中 <code>m = n / 3</code>。</p></li><li><p>对于方程 <code>x + y + z = m</code>，其中 <code>x, y, z</code> 是正整数，该解的个数为 <code>C(m - 1, 2)</code>，即从 <code>m-1</code> 中选择 2 个分隔符。</p></li></ul><h3 id="异常实例处理"><a href="#异常实例处理" class="headerlink" title="异常实例处理"></a>异常实例处理</h3><ul><li>当 <code>n</code> 不能被 3 整除时，无法分解成三个 <code>3</code> 的倍数，返回 <code>0</code>。</li><li>当 <code>m = n / 3</code> 小于 3时，即无法分解为三个正整数 3 的倍数，返回 <code>0</code>。</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 青训营 </tag>
+            
+            <tag> 刷题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>70. 爬楼梯</title>
       <link href="/2024/07/16/70-%E7%88%AC%E6%A5%BC%E6%A2%AF/"/>
       <url>/2024/07/16/70-%E7%88%AC%E6%A5%BC%E6%A2%AF/</url>
@@ -15,6 +36,8 @@
         <tags>
             
             <tag> leetcode刷题 </tag>
+            
+            <tag> 动态规划 </tag>
             
         </tags>
       
@@ -35,6 +58,8 @@
             
             <tag> leetcode刷题 </tag>
             
+            <tag> 链表 </tag>
+            
         </tags>
       
     </entry>
@@ -53,6 +78,8 @@
         <tags>
             
             <tag> leetcode刷题 </tag>
+            
+            <tag> 数组 </tag>
             
         </tags>
       
@@ -73,6 +100,8 @@
             
             <tag> leetcode刷题 </tag>
             
+            <tag> 链表 </tag>
+            
         </tags>
       
     </entry>
@@ -92,6 +121,8 @@
             
             <tag> leetcode刷题 </tag>
             
+            <tag> 链表 </tag>
+            
         </tags>
       
     </entry>
@@ -110,6 +141,8 @@
         <tags>
             
             <tag> leetcode刷题 </tag>
+            
+            <tag> 链表 </tag>
             
         </tags>
       
