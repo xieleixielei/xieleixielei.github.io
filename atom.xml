@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-11-13T08:16:07.594Z</updated>
+  <updated>2024-11-14T02:57:52.295Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>青训营-小R的城市稳定性挑战</title>
+    <link href="http://example.com/2024/11/14/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E5%9F%8E%E5%B8%82%E7%A8%B3%E5%AE%9A%E6%80%A7%E6%8C%91%E6%88%98/"/>
+    <id>http://example.com/2024/11/14/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E5%9F%8E%E5%B8%82%E7%A8%B3%E5%AE%9A%E6%80%A7%E6%8C%91%E6%88%98/</id>
+    <published>2024-11-14T02:19:58.000Z</published>
+    <updated>2024-11-14T02:57:52.295Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><hr><p>小R所在的国家有<code>n</code>个城市，每个城市的人口为 <code>a_i</code>。如果某个城市的人口不超过其他任何一个城市人口的两倍，那么这个城市就被认为是稳定的。国家可以对部分城市实施政策，从而改变它们的人口数量。你的任务是帮助小R找到<strong>最少需要对多少个城市</strong>进行人口修改，才能使所有城市都变得稳定。</p><p>例如：对于城市人口为 <code>[1, 2, 3, 4]</code> 的国家，最少需要对1个城市执行政策，才能使所有城市稳定。</p><hr><h3 id="测试样例"><a href="#测试样例" class="headerlink" title="测试样例"></a>测试样例</h3><p><em><strong>样例1：</strong></em></p><blockquote><p>输入：<code>n = 4 ,a = [1, 2, 3, 4]</code><br>输出：<code>1</code></p></blockquote><p><em><strong>样例2：</strong></em></p><blockquote><p>输入：<code>n = 5 ,a = [1, 10, 20, 30, 40]</code><br>输出：<code>2</code></p></blockquote><p><em><strong>样例3：</strong></em></p><blockquote><p>输入：<code>n = 3 ,a = [100, 50, 200]</code><br>输出：<code>1</code></p></blockquote><hr><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>每个城市的人口如果不超过其他城市人口的两倍，则这个城市是<strong>稳定的</strong>。换句话说，城市 i 的人口 <code>a_i</code>和城市j的人口<code>a_j</code>必须满足：</p><img src="C:\Users\28753\AppData\Roaming\Typora\typora-user-images\image-20241114105352891.png" alt="image-20241114105352891" style="zoom: 50%;" /><p>我们需要找出最少修改多少个城市的人口，才能使所有城市都满足这个条件。</p><p><strong>滑动窗口</strong>：通过滑动窗口（或者双指针方法）来找到最长的稳定子数组。最长稳定子数组中的城市不需要修改，因此最少修改的城市数是 <code>n - 最大稳定子数组长度</code>。</p><hr><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">solution</span>(<span class="hljs-params">n, a</span>):<br>    <span class="hljs-comment"># 1. 对人口数组进行排序</span><br>    a.sort()<br>    <br>    <span class="hljs-comment"># 2. 使用滑动窗口法来找到最长稳定子数组</span><br>    left = <span class="hljs-number">0</span>  <span class="hljs-comment"># 窗口的左边界</span><br>    max_stable_len = <span class="hljs-number">0</span>  <span class="hljs-comment"># 最大稳定子数组的长度</span><br>    <br>    <span class="hljs-keyword">for</span> right <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>        <span class="hljs-comment"># 检查当前窗口的稳定性，确保 a[right] &lt;= 2 * a[left]</span><br>        <span class="hljs-keyword">while</span> a[right] &gt; <span class="hljs-number">2</span> * a[left]:<br>            <span class="hljs-comment"># 如果不稳定，窗口左边界右移，缩小窗口</span><br>            left += <span class="hljs-number">1</span><br>        <span class="hljs-comment"># 更新最大稳定子数组的长度</span><br>        max_stable_len = <span class="hljs-built_in">max</span>(max_stable_len, right - left + <span class="hljs-number">1</span>)<br>    <br>    <span class="hljs-comment"># 最少修改城市数是总城市数减去最大稳定子数组的长度</span><br>    <span class="hljs-keyword">return</span> n - max_stable_len<br><br><span class="hljs-comment"># 测试样例</span><br><span class="hljs-built_in">print</span>(solution(<span class="hljs-number">4</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]))  <span class="hljs-comment"># 输出：1</span><br><span class="hljs-built_in">print</span>(solution(<span class="hljs-number">5</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>]))  <span class="hljs-comment"># 输出：2</span><br><span class="hljs-built_in">print</span>(solution(<span class="hljs-number">3</span>, [<span class="hljs-number">100</span>, <span class="hljs-number">50</span>, <span class="hljs-number">200</span>]))  <span class="hljs-comment"># 输出：1</span><br></code></pre></td></tr></table></figure><hr>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h3&gt;&lt;hr&gt;
+&lt;p&gt;小R所在的国家有&lt;code&gt;n&lt;/code&gt;个城市，每个城市的人口为 &lt;code&gt;a_i&lt;/code&gt;。如果某个城</summary>
+      
+    
+    
+    
+    
+    <category term="青训营" scheme="http://example.com/tags/%E9%9D%92%E8%AE%AD%E8%90%A5/"/>
+    
+    <category term="刷题" scheme="http://example.com/tags/%E5%88%B7%E9%A2%98/"/>
+    
+  </entry>
   
   <entry>
     <title>青训营-小R的三的倍数分解</title>
@@ -458,30 +483,6 @@
     <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     <category term="基础概念" scheme="http://example.com/tags/%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>主动学习笔记</title>
-    <link href="http://example.com/2023/11/01/%E4%B8%BB%E5%8A%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    <id>http://example.com/2023/11/01/%E4%B8%BB%E5%8A%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
-    <published>2023-11-01T14:38:32.000Z</published>
-    <updated>2023-11-01T14:47:47.478Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>Burr Settles的文章《Active Learning Literature Survey》详细地介绍了主动学习：<strong>“主动学习是机器学习的一个子领域，在统计学领域也叫查询学习或最优实验设计”。</strong>为解决某些任务数据标签较少或打标签“代价”较高的问题而出现。主动学习方法尝试解决样本的标注瓶颈，通过主动优先选择最有价值的未标注样本进行标注，以尽可能少的标注样本达到模型的预期性能。其主要方式是模型通过与用户或专家进行交互，抛出”query”(unlabel data)让专家确定数据的标签，如此反复，以期让模型利用较少的标记数据获得较好“性能”。</p><p>主动学习方法是一个迭代式的交互训练过程，主要由五个核心部分组成，包括：<strong>未标注样本池（unlabeled pool，记为U）、筛选策略（select queries，记为Q）、标注者（human annotator，记为S），标注数据集（labeled training set，记为L），目标模型（machine learning model，记为G）。</strong></p><p><img src="https://fastly.jsdelivr.net/gh/xieleixielei/picture/202311012238748.png" alt="image (2)"></p><p>active learning与passive learning最大的不同是passive learning或supervised learning其首先就需要大量的专家标注样本训练模型，而active learning则是利用少量标注样本，大量未标注样本训练模型，然后由learner选择样本返回给Oracle或expert打标签，进而不断迭代以获得较好的模型，该过程必须要有专家的参与，这也是active learning区别于semi-supervised learning的不同之处。</p><p><img src="https://fastly.jsdelivr.net/gh/xieleixielei/picture/202311012236954.png" alt="img"></p><p>半监督学习一般不需要人工参与，是通过具有一定分类精度的基准分类器实现对未标注样例的自动标注；而主动学习有别于半监督学习的特点之一就是需要将挑选出的高价值样例进行人工准确标注。</p><h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><h3 id="membership-query-synthesis"><a href="#membership-query-synthesis" class="headerlink" title="membership query synthesis"></a>membership query synthesis</h3><p>query samples可以为任意样本或随机生成（例如对图片样本进行旋转或添加“噪声”等，类似样本增强的策略），然后将其送个Oracle进行判断，策略并不是在数据池中挑选样本进行查询，而是自行生成新样本进行查询。其过程如下所示：</p><p><img src="https://fastly.jsdelivr.net/gh/xieleixielei/picture/202311012236782.png" alt="img"></p><p>由于在样本的随机生成过程中，其有较大的不确定性，因此在某些应用，如NLP中其生成的结果无任何意义，同时专家也无法标记，故这种方法对于某些应用场景有一定的局限性。</p><h3 id="stream-based-selective-sampling"><a href="#stream-based-selective-sampling" class="headerlink" title="stream-based selective sampling"></a>stream-based selective sampling</h3><p>假设样本的获得是“免费的”或代价较小的，数据以数据流的形式输入，主动学习策略需要确定对当前数据进行标记还是直接用现有模型预测。learner每次基于某种query strategy选择一个样本给专家进行标记，模型通过某种“informativeness measure”确定是否由专家标注样本，或舍弃该样本。如下：</p><p><img src="https://fastly.jsdelivr.net/gh/xieleixielei/picture/202311012236789.png" alt="img"></p><h3 id="pool-based-sampling"><a href="#pool-based-sampling" class="headerlink" title="pool-based sampling"></a>pool-based sampling</h3><p>Pool-Based Sampling每次确定一批unlabeled data，由专家标记。Pool-Based Sampling是active learning中应用最为广泛的一种framework。</p><p><img src="https://fastly.jsdelivr.net/gh/xieleixielei/picture/202311012236974.png" alt="img"></p><h2 id="Query-Strategy"><a href="#Query-Strategy" class="headerlink" title="Query Strategy"></a>Query Strategy</h2><p>如上文所述，learner需要根据一定的策略选择unlabeled data，在active learning中其主要包括以下几种：</p><h3 id="1-Uncertainty-Sampling"><a href="#1-Uncertainty-Sampling" class="headerlink" title="(1) Uncertainty Sampling"></a>(1) Uncertainty Sampling</h3><p>Uncertainty Sampling是最为广泛的一种query strategy（类似hard sample mining），其主要是将模型“最易混淆”或“信息量”最大、最有价值的样本返回给expert，以期获得较大的增益，用entropy衡量。</p><h3 id="2-Query-By—Committe"><a href="#2-Query-By—Committe" class="headerlink" title="(2) Query-By—Committe"></a>(2) Query-By—Committe</h3><p>Query-By—Committe的思想类似于模型集成和投票，不同的模型即为Committee，投票的divergence最大的样本即为“controversial sample”，利用vote entropy衡量。</p><h3 id="3-Expected-Model-Change"><a href="#3-Expected-Model-Change" class="headerlink" title="(3) Expected Model Change"></a>(3) Expected Model Change</h3><p>Expected Model Change其主要思想即对模型“改变”最大的标记样本为“有价值”的样本，这里对模型“改变”的衡量可以由梯度提升来体现，如“expected gradient length” (EGL)。</p><h3 id="4-Expected-Error-Reduction"><a href="#4-Expected-Error-Reduction" class="headerlink" title="(4) Expected Error Reduction"></a>(4) Expected Error Reduction</h3><p>类似与Expect Model Change，Expected Error Reduction的思想是通过增加一个标注的样本其loss减小最多。</p><h3 id="5-Variance-Reduction"><a href="#5-Variance-Reduction" class="headerlink" title="(5) Variance Reduction"></a>(5) Variance Reduction</h3><p>Expected Error Reduction需要判断每个样本对模型的“贡献程度”，其“成本”较高，而Variance Reduction其主要思想是使variance最小的样本，其“价值”最大。</p><h3 id="6-Density-Weighted-Methods"><a href="#6-Density-Weighted-Methods" class="headerlink" title="(6) Density-Weighted Methods"></a>(6) Density-Weighted Methods</h3><p>由uncertain strategy确定的样本其更多的是关注单个样本对模型的提升或“贡献”程度，然而很多候，其“模糊”的样本往往会是一些outliers或噪声，若让模型更多的关注或学习这些样本，其对性能的提升将不会产生帮助，在考虑individual时同时还需关注整体样本的分布，故提出了Density-Weighted Methods。</p><p> 参考：</p><ol><li><a href="https://zhuanlan.zhihu.com/p/377045943">主动学习（Active Learning），看这一篇就够了</a></li><li><a href="https://zhuanlan.zhihu.com/p/79764678">主动学习（Active Learning）-少标签数据学习</a></li><li><a href="https://www.zhihu.com/question/352299820/answer/1860798696">https://www.zhihu.com/question/352299820/answer/1860798696</a></li></ol>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h2&gt;&lt;p&gt;Burr Settles的文章《Active Learning Literature Survey》详细地介绍了主动学习：&lt;strong&gt;“</summary>
-      
-    
-    
-    
-    
-    <category term="主动学习" scheme="http://example.com/tags/%E4%B8%BB%E5%8A%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    <category term="深度学习" scheme="http://example.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   

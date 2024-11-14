@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>青训营-小R的城市稳定性挑战</title>
+      <link href="/2024/11/14/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E5%9F%8E%E5%B8%82%E7%A8%B3%E5%AE%9A%E6%80%A7%E6%8C%91%E6%88%98/"/>
+      <url>/2024/11/14/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E5%9F%8E%E5%B8%82%E7%A8%B3%E5%AE%9A%E6%80%A7%E6%8C%91%E6%88%98/</url>
+      
+        <content type="html"><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><hr><p>小R所在的国家有<code>n</code>个城市，每个城市的人口为 <code>a_i</code>。如果某个城市的人口不超过其他任何一个城市人口的两倍，那么这个城市就被认为是稳定的。国家可以对部分城市实施政策，从而改变它们的人口数量。你的任务是帮助小R找到<strong>最少需要对多少个城市</strong>进行人口修改，才能使所有城市都变得稳定。</p><p>例如：对于城市人口为 <code>[1, 2, 3, 4]</code> 的国家，最少需要对1个城市执行政策，才能使所有城市稳定。</p><hr><h3 id="测试样例"><a href="#测试样例" class="headerlink" title="测试样例"></a>测试样例</h3><p><em><strong>样例1：</strong></em></p><blockquote><p>输入：<code>n = 4 ,a = [1, 2, 3, 4]</code><br>输出：<code>1</code></p></blockquote><p><em><strong>样例2：</strong></em></p><blockquote><p>输入：<code>n = 5 ,a = [1, 10, 20, 30, 40]</code><br>输出：<code>2</code></p></blockquote><p><em><strong>样例3：</strong></em></p><blockquote><p>输入：<code>n = 3 ,a = [100, 50, 200]</code><br>输出：<code>1</code></p></blockquote><hr><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>每个城市的人口如果不超过其他城市人口的两倍，则这个城市是<strong>稳定的</strong>。换句话说，城市 i 的人口 <code>a_i</code>和城市j的人口<code>a_j</code>必须满足：</p><img src="C:\Users\28753\AppData\Roaming\Typora\typora-user-images\image-20241114105352891.png" alt="image-20241114105352891" style="zoom: 50%;" /><p>我们需要找出最少修改多少个城市的人口，才能使所有城市都满足这个条件。</p><p><strong>滑动窗口</strong>：通过滑动窗口（或者双指针方法）来找到最长的稳定子数组。最长稳定子数组中的城市不需要修改，因此最少修改的城市数是 <code>n - 最大稳定子数组长度</code>。</p><hr><h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">solution</span>(<span class="hljs-params">n, a</span>):<br>    <span class="hljs-comment"># 1. 对人口数组进行排序</span><br>    a.sort()<br>    <br>    <span class="hljs-comment"># 2. 使用滑动窗口法来找到最长稳定子数组</span><br>    left = <span class="hljs-number">0</span>  <span class="hljs-comment"># 窗口的左边界</span><br>    max_stable_len = <span class="hljs-number">0</span>  <span class="hljs-comment"># 最大稳定子数组的长度</span><br>    <br>    <span class="hljs-keyword">for</span> right <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):<br>        <span class="hljs-comment"># 检查当前窗口的稳定性，确保 a[right] &lt;= 2 * a[left]</span><br>        <span class="hljs-keyword">while</span> a[right] &gt; <span class="hljs-number">2</span> * a[left]:<br>            <span class="hljs-comment"># 如果不稳定，窗口左边界右移，缩小窗口</span><br>            left += <span class="hljs-number">1</span><br>        <span class="hljs-comment"># 更新最大稳定子数组的长度</span><br>        max_stable_len = <span class="hljs-built_in">max</span>(max_stable_len, right - left + <span class="hljs-number">1</span>)<br>    <br>    <span class="hljs-comment"># 最少修改城市数是总城市数减去最大稳定子数组的长度</span><br>    <span class="hljs-keyword">return</span> n - max_stable_len<br><br><span class="hljs-comment"># 测试样例</span><br><span class="hljs-built_in">print</span>(solution(<span class="hljs-number">4</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]))  <span class="hljs-comment"># 输出：1</span><br><span class="hljs-built_in">print</span>(solution(<span class="hljs-number">5</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>]))  <span class="hljs-comment"># 输出：2</span><br><span class="hljs-built_in">print</span>(solution(<span class="hljs-number">3</span>, [<span class="hljs-number">100</span>, <span class="hljs-number">50</span>, <span class="hljs-number">200</span>]))  <span class="hljs-comment"># 输出：1</span><br></code></pre></td></tr></table></figure><hr>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 青训营 </tag>
+            
+            <tag> 刷题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>青训营-小R的三的倍数分解</title>
       <link href="/2024/11/13/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E4%B8%89%E7%9A%84%E5%80%8D%E6%95%B0%E5%88%86%E8%A7%A3/"/>
       <url>/2024/11/13/%E9%9D%92%E8%AE%AD%E8%90%A5-%E5%B0%8FR%E7%9A%84%E4%B8%89%E7%9A%84%E5%80%8D%E6%95%B0%E5%88%86%E8%A7%A3/</url>
